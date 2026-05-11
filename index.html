@@ -1,0 +1,628 @@
+html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hamza Associate | Premium Mumbai Real Estate</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Plus+Jakarta+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --gold-main: #c5a059;
+            --bg-dark: #0a0a0a;
+            --bg-darker: #050505;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-darker);
+            color: #f8fafc;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        .font-serif-luxury {
+            font-family: 'Cinzel', serif;
+        }
+
+        /* Gold Gradients */
+        .text-gradient-gold {
+            background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
+
+        .bg-gradient-gold {
+            background: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728);
+        }
+
+        /* Navbar */
+        .glass-nav {
+            background: rgba(5, 5, 5, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(197, 160, 89, 0.15);
+        }
+
+        /* Sliders */
+        .hero-slider {
+            height: 100vh;
+            position: relative;
+            background-color: #111;
+        }
+        
+        .slide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out, transform 10s linear;
+            background-size: cover;
+            background-position: center;
+            transform: scale(1.05);
+            z-index: 1;
+        }
+        
+        .slide.active {
+            opacity: 1;
+            transform: scale(1);
+            z-index: 2;
+        }
+
+        .slide-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.7) 100%);
+            z-index: 3;
+        }
+
+        .slide-content {
+            position: relative;
+            z-index: 4;
+        }
+
+        /* Cards */
+        .property-card {
+            background-color: var(--bg-dark);
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.4s ease;
+        }
+
+        .property-card:hover {
+            border-color: var(--gold-main);
+            transform: translateY(-8px);
+            box-shadow: 0 10px 30px rgba(197, 160, 89, 0.1);
+        }
+
+        .img-zoom-container {
+            overflow: hidden;
+            background-color: #1a1a1a;
+        }
+
+        .img-zoom-container img {
+            transition: transform 0.7s ease;
+        }
+
+        .property-card:hover .img-zoom-container img,
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        /* Hide broken image icons safely */
+        img { color: transparent; }
+    </style>
+</head>
+<body>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="fixed inset-0 bg-black/98 z-[60] flex flex-col items-center justify-center space-y-8 text-white text-xl uppercase tracking-widest transition-all duration-300 opacity-0 pointer-events-none">
+        <button id="close-menu" class="absolute top-8 right-8 text-3xl text-gray-400 hover:text-white transition-colors">
+            <i class="fas fa-times"></i>
+        </button>
+        <a href="#home" class="mobile-link hover:text-[#c5a059] transition-colors">Home</a>
+        <a href="#residential" class="mobile-link hover:text-[#c5a059] transition-colors">Residential</a>
+        <a href="#commercial" class="mobile-link hover:text-[#c5a059] transition-colors">Commercial</a>
+        <a href="#gallery" class="mobile-link hover:text-[#c5a059] transition-colors">Gallery</a>
+        <a href="#testimonials" class="mobile-link hover:text-[#c5a059] transition-colors">Testimonials</a>
+        <a href="#contact" class="mobile-link bg-gradient-gold text-black px-10 py-4 text-sm font-bold mt-4 rounded shadow-lg">Enquire Now</a>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-nav transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20 md:h-24">
+                <!-- Logo -->
+                <div class="flex items-center gap-3 md:gap-4 cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <div class="w-10 h-10 md:w-12 md:h-12 bg-gradient-gold flex items-center justify-center rounded text-black transform rotate-45 hover:rotate-0 transition-transform duration-500 shadow-lg">
+                        <i class="fas fa-building -rotate-45 hover:rotate-0 transition-transform duration-500 text-lg md:text-xl"></i>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-xl md:text-2xl font-serif-luxury tracking-widest uppercase">Hamza</span>
+                        <span class="text-gradient-gold text-[10px] md:text-sm tracking-[0.2em] md:tracking-[0.3em] uppercase font-bold mt-[-2px] md:mt-[-4px]">Associate</span>
+                    </div>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8 text-xs font-bold uppercase tracking-[0.2em] text-gray-300">
+                    <a href="#home" class="hover:text-white hover:text-gradient-gold transition-all">Home</a>
+                    <a href="#residential" class="hover:text-white hover:text-gradient-gold transition-all">Residential</a>
+                    <a href="#commercial" class="hover:text-white hover:text-gradient-gold transition-all">Commercial</a>
+                    <a href="#gallery" class="hover:text-white hover:text-gradient-gold transition-all">Gallery</a>
+                </div>
+
+                <!-- CTA Button (Desktop) -->
+                <div class="hidden md:block">
+                    <a href="#contact" class="bg-gradient-gold text-black px-6 py-3 text-xs font-bold uppercase tracking-widest rounded shadow-lg hover:shadow-[0_0_20px_rgba(197,160,89,0.4)] transition-all">
+                        Enquire Now
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Icon -->
+                <button id="menu-btn" class="md:hidden text-white text-2xl focus:outline-none">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 1. Hero Sliders Section -->
+    <section id="home" class="hero-slider">
+        <!-- Slide 1: Worli Sea Link -->
+        <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1570160897548-251301021411?auto=format&fit=crop&q=80&w=1920');"></div>
+        
+        <!-- Slide 2: BKC Commercial Hub -->
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1623492701902-47dc207df5dc?auto=format&fit=crop&q=80&w=1920');"></div>
+        
+        <!-- Slide 3: Nariman Point / Marine Drive -->
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1566552881560-0be862a7c445?auto=format&fit=crop&q=80&w=1920');"></div>
+
+        <div class="slide-overlay"></div>
+
+        <!-- Static Content over Sliders -->
+        <div class="slide-content h-full flex flex-col justify-center items-center text-center px-4 pt-20">
+            <h2 class="text-gradient-gold font-bold tracking-[0.3em] md:tracking-[0.5em] uppercase text-xs md:text-sm mb-4 md:mb-6">Mumbai's Premier Estates</h2>
+            <h1 class="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-serif-luxury text-white mb-6 md:mb-8 leading-tight drop-shadow-2xl">
+                Redefining <br> The Skyline
+            </h1>
+            <p class="text-gray-300 text-sm sm:text-base md:text-lg lg:text-xl max-w-2xl mx-auto font-light mb-8 md:mb-12 px-4">
+                Discover an exclusive portfolio of ultra-premium residential and commercial properties curated across BKC, Worli, and Nariman Point.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 sm:gap-6 w-full sm:w-auto px-4">
+                <a href="#residential" class="bg-gradient-gold text-black px-8 md:px-10 py-4 text-xs md:text-sm font-bold uppercase tracking-widest hover:scale-105 transition-transform rounded w-full sm:w-auto text-center">
+                    Residential
+                </a>
+                <a href="#commercial" class="border border-[#c5a059] text-white px-8 md:px-10 py-4 text-xs md:text-sm font-bold uppercase tracking-widest hover:bg-[#c5a059] hover:text-black transition-all rounded w-full sm:w-auto text-center">
+                    Commercial
+                </a>
+            </div>
+        </div>
+
+        <!-- Slider Navigation Indicators -->
+        <div class="absolute bottom-6 md:bottom-10 left-0 right-0 z-40 flex justify-center space-x-3 md:space-x-4">
+            <button onclick="setSlide(0)" class="nav-dot w-8 md:w-12 h-1 bg-white transition-all duration-300"></button>
+            <button onclick="setSlide(1)" class="nav-dot w-4 md:w-8 h-1 bg-white/30 transition-all duration-300 hover:bg-white/60"></button>
+            <button onclick="setSlide(2)" class="nav-dot w-4 md:w-8 h-1 bg-white/30 transition-all duration-300 hover:bg-white/60"></button>
+        </div>
+    </section>
+
+    <!-- Stats Bar -->
+    <div class="border-y border-white/10 bg-[#080808] py-8 md:py-12 relative z-20">
+        <div class="max-w-7xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 text-center">
+            <div>
+                <h3 class="text-2xl sm:text-3xl md:text-4xl font-serif-luxury text-gradient-gold mb-1 md:mb-2">₹10K Cr+</h3>
+                <p class="text-[9px] md:text-xs uppercase tracking-widest text-gray-500">Sales Volume</p>
+            </div>
+            <div>
+                <h3 class="text-2xl sm:text-3xl md:text-4xl font-serif-luxury text-gradient-gold mb-1 md:mb-2">1,500+</h3>
+                <p class="text-[9px] md:text-xs uppercase tracking-widest text-gray-500">Properties Sold</p>
+            </div>
+            <div>
+                <h3 class="text-2xl sm:text-3xl md:text-4xl font-serif-luxury text-gradient-gold mb-1 md:mb-2">RERA</h3>
+                <p class="text-[9px] md:text-xs uppercase tracking-widest text-gray-500">Certified Partners</p>
+            </div>
+            <div>
+                <h3 class="text-2xl sm:text-3xl md:text-4xl font-serif-luxury text-gradient-gold mb-1 md:mb-2">18+</h3>
+                <p class="text-[9px] md:text-xs uppercase tracking-widest text-gray-500">Years Experience</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. Products: Residential Section (Adani, Godrej, Prestige) -->
+    <section id="residential" class="py-16 md:py-24 bg-[#050505]">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 md:mb-16 gap-4">
+                <div>
+                    <h2 class="text-gradient-gold font-bold uppercase tracking-[0.2em] md:tracking-[0.3em] text-[10px] md:text-xs mb-2 md:mb-3">Mumbai's Finest</h2>
+                    <h3 class="text-3xl md:text-5xl font-serif-luxury">Branded Residences</h3>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                <!-- Adani Property -->
+                <div class="property-card rounded-lg overflow-hidden group">
+                    <div class="img-zoom-container relative h-64 md:h-72 w-full">
+                        <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&q=80&w=800" loading="lazy" alt="Adani Ten BKC" class="w-full h-full object-cover">
+                        <div class="absolute top-4 right-4 bg-black/70 backdrop-blur text-white px-3 py-1 text-[10px] font-bold uppercase tracking-widest border border-white/10 rounded">Ongoing</div>
+                    </div>
+                    <div class="p-6 md:p-8">
+                        <h4 class="text-lg md:text-xl font-serif-luxury mb-1">Adani Ten BKC</h4>
+                        <p class="text-gray-500 text-[10px] md:text-xs tracking-wider uppercase mb-4"><i class="fas fa-map-marker-alt text-[#c5a059] mr-2"></i>Bandra Kurla Complex</p>
+                        <p class="text-gradient-gold text-lg md:text-xl font-bold mb-6">₹ 5.5 Cr Onwards</p>
+                        
+                        <div class="flex justify-between items-center text-[10px] md:text-[11px] text-gray-400 border-t border-white/10 pt-5 md:pt-6 uppercase tracking-widest">
+                            <span><i class="fas fa-bed text-[#c5a059] mr-1 md:mr-2"></i> 3 & 4 BHK</span>
+                            <span><i class="fas fa-expand text-[#c5a059] mr-1 md:mr-2"></i> 1,500+ sqft</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Prestige Property -->
+                <div class="property-card rounded-lg overflow-hidden group">
+                    <div class="img-zoom-container relative h-64 md:h-72 w-full">
+                        <img src="https://images.unsplash.com/photo-1600607687940-4e524cb35097?auto=format&fit=crop&q=80&w=800" loading="lazy" alt="Prestige Jasdan Classic" class="w-full h-full object-cover">
+                        <div class="absolute top-4 right-4 bg-[#c5a059] text-black px-3 py-1 text-[10px] font-bold uppercase tracking-widest rounded">Ultra Luxury</div>
+                    </div>
+                    <div class="p-6 md:p-8">
+                        <h4 class="text-lg md:text-xl font-serif-luxury mb-1">Prestige Jasdan Classic</h4>
+                        <p class="text-gray-500 text-[10px] md:text-xs tracking-wider uppercase mb-4"><i class="fas fa-map-marker-alt text-[#c5a059] mr-2"></i>Mahalaxmi, South Mumbai</p>
+                        <p class="text-gradient-gold text-lg md:text-xl font-bold mb-6">₹ 7.2 Cr Onwards</p>
+                        
+                        <div class="flex justify-between items-center text-[10px] md:text-[11px] text-gray-400 border-t border-white/10 pt-5 md:pt-6 uppercase tracking-widest">
+                            <span><i class="fas fa-bed text-[#c5a059] mr-1 md:mr-2"></i> 2, 3 & 4 BHK</span>
+                            <span><i class="fas fa-expand text-[#c5a059] mr-1 md:mr-2"></i> 880 - 1700 sqft</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Godrej Property -->
+                <div class="property-card rounded-lg overflow-hidden group">
+                    <div class="img-zoom-container relative h-64 md:h-72 w-full">
+                        <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=800" loading="lazy" alt="Godrej Horizon" class="w-full h-full object-cover">
+                        <div class="absolute top-4 right-4 bg-black/70 backdrop-blur text-white px-3 py-1 text-[10px] font-bold uppercase tracking-widest border border-white/10 rounded">New Launch</div>
+                    </div>
+                    <div class="p-6 md:p-8">
+                        <h4 class="text-lg md:text-xl font-serif-luxury mb-1">Godrej Horizon</h4>
+                        <p class="text-gray-500 text-[10px] md:text-xs tracking-wider uppercase mb-4"><i class="fas fa-map-marker-alt text-[#c5a059] mr-2"></i>Wadala</p>
+                        <p class="text-gradient-gold text-lg md:text-xl font-bold mb-6">₹ 2.8 Cr Onwards</p>
+                        
+                        <div class="flex justify-between items-center text-[10px] md:text-[11px] text-gray-400 border-t border-white/10 pt-5 md:pt-6 uppercase tracking-widest">
+                            <span><i class="fas fa-bed text-[#c5a059] mr-1 md:mr-2"></i> 2 & 3 BHK</span>
+                            <span><i class="fas fa-expand text-[#c5a059] mr-1 md:mr-2"></i> 750 - 1100 sqft</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Products: Commercial Section -->
+    <section id="commercial" class="py-16 md:py-24 bg-[#0a0a0a] border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 md:mb-16 gap-4">
+                <div>
+                    <h2 class="text-gradient-gold font-bold uppercase tracking-[0.2em] md:tracking-[0.3em] text-[10px] md:text-xs mb-2 md:mb-3">Elevate Your Business</h2>
+                    <h3 class="text-3xl md:text-5xl font-serif-luxury">Commercial Spaces</h3>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
+                <!-- BKC Commercial -->
+                <div class="property-card rounded-lg overflow-hidden flex flex-col md:flex-row group">
+                    <div class="img-zoom-container md:w-2/5 h-56 md:h-auto">
+                        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=800" loading="lazy" alt="BKC Office" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6 md:p-8 md:w-3/5 flex flex-col justify-center">
+                        <div class="mb-3 md:mb-4 inline-block bg-white/5 border border-white/10 px-2 py-1 md:px-3 text-[9px] md:text-[10px] uppercase tracking-widest w-max text-gray-300 rounded">Grade A Office</div>
+                        <h4 class="text-xl md:text-2xl font-serif-luxury mb-2">BKC Corporate Hub</h4>
+                        <p class="text-gray-500 text-[10px] md:text-xs tracking-wider uppercase mb-3 md:mb-4"><i class="fas fa-map-marker-alt text-[#c5a059] mr-2"></i>Bandra Kurla Complex</p>
+                        <p class="text-gradient-gold text-lg md:text-xl font-bold mb-4 md:mb-6">₹ 450 / sq.ft. Lease</p>
+                        <div class="flex items-center gap-4 md:gap-6 text-[10px] md:text-[11px] text-gray-400 uppercase tracking-widest border-t border-white/10 pt-4">
+                            <span><i class="fas fa-building text-[#c5a059] mr-1 md:mr-2"></i> Bare Shell / Furnished</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lower Parel Commercial -->
+                <div class="property-card rounded-lg overflow-hidden flex flex-col md:flex-row group">
+                    <div class="img-zoom-container md:w-2/5 h-56 md:h-auto">
+                        <img src="https://images.unsplash.com/photo-1582653291997-079a1c04e5a1?auto=format&fit=crop&q=80&w=800" loading="lazy" alt="Lower Parel Retail" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6 md:p-8 md:w-3/5 flex flex-col justify-center">
+                        <div class="mb-3 md:mb-4 inline-block bg-white/5 border border-white/10 px-2 py-1 md:px-3 text-[9px] md:text-[10px] uppercase tracking-widest w-max text-gray-300 rounded">Boutique Office / Retail</div>
+                        <h4 class="text-xl md:text-2xl font-serif-luxury mb-2">Lower Parel Estate</h4>
+                        <p class="text-gray-500 text-[10px] md:text-xs tracking-wider uppercase mb-3 md:mb-4"><i class="fas fa-map-marker-alt text-[#c5a059] mr-2"></i>Lower Parel West</p>
+                        <p class="text-gradient-gold text-lg md:text-xl font-bold mb-4 md:mb-6">₹ 22 Cr For Sale</p>
+                        <div class="flex items-center gap-4 md:gap-6 text-[10px] md:text-[11px] text-gray-400 uppercase tracking-widest border-t border-white/10 pt-4">
+                            <span><i class="fas fa-store text-[#c5a059] mr-1 md:mr-2"></i> 5,000 sqft</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Lifestyle Gallery -->
+    <section id="gallery" class="py-16 md:py-24 bg-[#050505]">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-10 md:mb-16">
+                <h2 class="text-gradient-gold font-bold uppercase tracking-[0.2em] md:tracking-[0.3em] text-[10px] md:text-xs mb-2 md:mb-3">Visual Tour</h2>
+                <h3 class="text-3xl md:text-5xl font-serif-luxury">Mumbai Landscapes</h3>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 auto-rows-[200px] md:auto-rows-[250px]">
+                <!-- Large Feature Image -->
+                <div class="gallery-item md:col-span-2 md:row-span-2 relative overflow-hidden rounded-lg cursor-pointer bg-[#111]">
+                    <img src="https://images.unsplash.com/photo-1566552881560-0be862a7c445?auto=format&fit=crop&q=80&w=1200" loading="lazy" alt="Marine Drive" class="w-full h-full object-cover transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-6 md:p-8">
+                        <h4 class="text-xl md:text-2xl font-serif-luxury text-white">Queen's Necklace</h4>
+                        <p class="text-[#c5a059] text-[10px] md:text-xs uppercase tracking-widest mt-1 md:mt-2">Marine Drive</p>
+                    </div>
+                </div>
+                
+                <!-- Smaller Images -->
+                <div class="gallery-item relative overflow-hidden rounded-lg bg-[#111]">
+                    <img src="https://images.unsplash.com/photo-1595658658481-d53d3f999875?auto=format&fit=crop&q=80&w=600" loading="lazy" alt="Gateway of India" class="w-full h-full object-cover transition-transform duration-700">
+                </div>
+                <div class="gallery-item relative overflow-hidden rounded-lg bg-[#111]">
+                    <img src="https://images.unsplash.com/photo-1623492701902-47dc207df5dc?auto=format&fit=crop&q=80&w=600" loading="lazy" alt="BKC" class="w-full h-full object-cover transition-transform duration-700">
+                </div>
+                <div class="gallery-item sm:col-span-2 md:col-span-2 relative overflow-hidden rounded-lg bg-[#111]">
+                    <img src="https://images.unsplash.com/photo-1570160897548-251301021411?auto=format&fit=crop&q=80&w=1200" loading="lazy" alt="Sea Link" class="w-full h-full object-cover transition-transform duration-700">
+                    <div class="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
+                        <div class="w-12 h-12 md:w-16 md:h-16 rounded-full border-2 border-[#c5a059] flex items-center justify-center bg-black/50 backdrop-blur">
+                            <i class="fas fa-play text-[#c5a059] ml-1"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Testimonials -->
+    <section id="testimonials" class="py-16 md:py-24 bg-[#0a0a0a] border-t border-white/5 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 relative z-10">
+            <div class="text-center mb-10 md:mb-16">
+                <h2 class="text-gradient-gold font-bold uppercase tracking-[0.2em] md:tracking-[0.3em] text-[10px] md:text-xs mb-2 md:mb-3">Client Trust</h2>
+                <h3 class="text-3xl md:text-5xl font-serif-luxury">Testimonials</h3>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="bg-[#050505] p-8 md:p-10 border border-white/5 rounded-lg relative mt-6 md:mt-8">
+                    <div class="absolute -top-5 md:-top-6 left-8 md:left-10 text-3xl md:text-4xl text-[#c5a059] opacity-50">
+                        <i class="fas fa-quote-left"></i>
+                    </div>
+                    <div class="flex text-[#c5a059] text-xs md:text-sm mb-4 md:mb-6">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-400 font-light text-sm md:text-base leading-relaxed mb-6 md:mb-8">
+                        "Hamza Associate guided us perfectly through the purchase of our sea-facing apartment in Worli. Their knowledge of South Mumbai real estate is exceptional."
+                    </p>
+                    <div class="border-t border-white/10 pt-4 md:pt-6">
+                        <p class="font-serif-luxury text-base md:text-lg text-white">Rohan Mehta</p>
+                        <p class="text-[10px] md:text-xs text-gray-500 uppercase tracking-widest mt-1">Business Owner</p>
+                    </div>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="bg-[#050505] p-8 md:p-10 border border-white/5 rounded-lg relative mt-6 md:mt-0">
+                    <div class="absolute -top-5 md:-top-6 left-8 md:left-10 text-3xl md:text-4xl text-[#c5a059] opacity-50">
+                        <i class="fas fa-quote-left"></i>
+                    </div>
+                    <div class="flex text-[#c5a059] text-xs md:text-sm mb-4 md:mb-6">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-400 font-light text-sm md:text-base leading-relaxed mb-6 md:mb-8">
+                        "When expanding our operations in BKC, we needed a premium office space fast. The team negotiated a brilliant deal in a top-tier corporate building."
+                    </p>
+                    <div class="border-t border-white/10 pt-4 md:pt-6">
+                        <p class="font-serif-luxury text-base md:text-lg text-white">Ananya Sharma</p>
+                        <p class="text-[10px] md:text-xs text-gray-500 uppercase tracking-widest mt-1">Director, FinTech Hub</p>
+                    </div>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="bg-[#050505] p-8 md:p-10 border border-white/5 rounded-lg relative mt-6 md:mt-12">
+                    <div class="absolute -top-5 md:-top-6 left-8 md:left-10 text-3xl md:text-4xl text-[#c5a059] opacity-50">
+                        <i class="fas fa-quote-left"></i>
+                    </div>
+                    <div class="flex text-[#c5a059] text-xs md:text-sm mb-4 md:mb-6">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-400 font-light text-sm md:text-base leading-relaxed mb-6 md:mb-8">
+                        "Investing in under-construction projects can be daunting, but their team provided transparent data on Godrej and Prestige properties that made decision-making easy."
+                    </p>
+                    <div class="border-t border-white/10 pt-4 md:pt-6">
+                        <p class="font-serif-luxury text-base md:text-lg text-white">Vikram Dalal</p>
+                        <p class="text-[10px] md:text-xs text-gray-500 uppercase tracking-widest mt-1">NRI Investor</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Footer -->
+    <footer id="contact" class="bg-[#050505] pt-16 md:pt-24 pb-8 md:pb-12 border-t border-[#c5a059]/20">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-16 mb-12 md:mb-20">
+                <!-- Brand Info -->
+                <div class="sm:col-span-2 lg:col-span-1">
+                    <div class="flex items-center gap-3 mb-6 md:mb-8">
+                        <div class="w-10 h-10 bg-gradient-gold flex items-center justify-center rounded text-black transform rotate-45 shadow-lg">
+                            <i class="fas fa-building -rotate-45 text-sm"></i>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="text-xl font-serif-luxury tracking-widest uppercase text-white">Hamza</span>
+                            <span class="text-gradient-gold text-[10px] tracking-[0.3em] uppercase font-bold mt-[-2px]">Associate</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-500 text-sm leading-relaxed mb-6 md:mb-8 font-light">
+                        Elite real estate advisory specializing in premium properties across Mumbai's most coveted neighborhoods.
+                    </p>
+                    <div class="flex space-x-4 md:space-x-5">
+                        <a href="#" aria-label="Instagram" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-gray-400 hover:border-[#c5a059] hover:text-[#c5a059] transition-all"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="LinkedIn" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-gray-400 hover:border-[#c5a059] hover:text-[#c5a059] transition-all"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" aria-label="WhatsApp" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-gray-400 hover:border-[#c5a059] hover:text-[#c5a059] transition-all"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+
+                <!-- Contact Info -->
+                <div>
+                    <h6 class="font-bold text-white mb-6 md:mb-8 uppercase tracking-[0.2em] text-xs">Corporate Office</h6>
+                    <ul class="space-y-4 md:space-y-5 text-gray-400 text-sm font-light">
+                        <li class="flex items-start gap-4">
+                            <i class="fas fa-map-marker-alt mt-1 text-[#c5a059]"></i>
+                            <span>A-Wing, 4th Floor<br>Bandra Kurla Complex, Mumbai</span>
+                        </li>
+                        <li class="flex items-center gap-4">
+                            <i class="fas fa-phone text-[#c5a059]"></i>
+                            <span>+91 98765 43210</span>
+                        </li>
+                        <li class="flex items-center gap-4">
+                            <i class="fas fa-envelope text-[#c5a059]"></i>
+                            <span>info@hamzaassociate.in</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h6 class="font-bold text-white mb-6 md:mb-8 uppercase tracking-[0.2em] text-xs">Developers</h6>
+                    <ul class="space-y-3 md:space-y-4 text-gray-400 text-sm font-light">
+                        <li><a href="#residential" class="hover:text-[#c5a059] transition-colors">Godrej Properties</a></li>
+                        <li><a href="#residential" class="hover:text-[#c5a059] transition-colors">Prestige Group</a></li>
+                        <li><a href="#residential" class="hover:text-[#c5a059] transition-colors">Adani Realty</a></li>
+                        <li><a href="#commercial" class="hover:text-[#c5a059] transition-colors">Commercial Leases</a></li>
+                    </ul>
+                </div>
+
+                <!-- Newsletter -->
+                <div class="sm:col-span-2 lg:col-span-1">
+                    <h6 class="font-bold text-white mb-6 md:mb-8 uppercase tracking-[0.2em] text-xs">Stay Updated</h6>
+                    <p class="text-gray-400 text-sm mb-4 md:mb-6 font-light">Register to receive exclusive project updates in Mumbai.</p>
+                    <form class="flex flex-col gap-4" onsubmit="event.preventDefault();">
+                        <div class="border-b border-white/20 pb-2 flex items-center">
+                            <i class="far fa-envelope text-gray-500 mr-3"></i>
+                            <input type="email" placeholder="Email Address" required class="bg-transparent border-none text-sm w-full text-white focus:outline-none placeholder-gray-600">
+                        </div>
+                        <button type="submit" class="bg-white/5 hover:bg-[#c5a059] hover:text-black border border-white/10 text-white px-6 py-3 text-xs uppercase tracking-widest font-bold transition-all w-full text-left flex justify-between items-center rounded mt-2">
+                            <span>Subscribe</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Copyright line -->
+            <div class="pt-6 md:pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
+                <p class="text-gray-600 text-[10px] uppercase tracking-[0.2em]">
+                    &copy; 2026 Hamza Associate Real Estate. MahaRERA Registered.
+                </p>
+                <div class="flex flex-wrap justify-center space-x-4 md:space-x-6 text-gray-600 text-[10px] uppercase tracking-[0.2em]">
+                    <a href="#" class="hover:text-[#c5a059] transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-[#c5a059] transition-colors">Terms of Use</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JS Logic for Slider and Mobile Navbar -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Slider implementation
+            const slides = document.querySelectorAll('.slide');
+            const dots = document.querySelectorAll('.nav-dot');
+            let currentSlide = 0;
+            let slideInterval;
+
+            function updateSlider(index) {
+                // Reset states
+                slides.forEach(s => s.classList.remove('active'));
+                dots.forEach(d => {
+                    // Mobile friendly dot sizing logic
+                    d.classList.remove('bg-white', 'w-8', 'md:w-12');
+                    d.classList.add('bg-white/30', 'w-4', 'md:w-8');
+                });
+
+                // Set active
+                slides[index].classList.add('active');
+                dots[index].classList.remove('bg-white/30', 'w-4', 'md:w-8');
+                dots[index].classList.add('bg-white', 'w-8', 'md:w-12');
+            }
+
+            // Expose globally for the onclick inline handlers
+            window.setSlide = function(index) {
+                currentSlide = index;
+                updateSlider(currentSlide);
+                resetInterval();
+            };
+
+            function nextSlide() {
+                currentSlide = (currentSlide + 1) % slides.length;
+                updateSlider(currentSlide);
+            }
+
+            function resetInterval() {
+                clearInterval(slideInterval);
+                slideInterval = setInterval(nextSlide, 5000);
+            }
+
+            // Start slider
+            if(slides.length > 0) {
+                updateSlider(0);
+                resetInterval();
+            }
+
+            // Navbar scroll effect
+            const nav = document.querySelector('nav');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    nav.classList.add('shadow-lg');
+                    nav.style.background = 'rgba(5, 5, 5, 0.98)';
+                } else {
+                    nav.classList.remove('shadow-lg');
+                    nav.style.background = 'rgba(5, 5, 5, 0.85)';
+                }
+            });
+
+            // Mobile Menu Logic
+            const menuBtn = document.getElementById('menu-btn');
+            const closeMenuBtn = document.getElementById('close-menu');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileLinks = document.querySelectorAll('.mobile-link');
+
+            function toggleMobileMenu() {
+                const isHidden = mobileMenu.classList.contains('pointer-events-none');
+                
+                if(isHidden) {
+                    // Open Menu
+                    mobileMenu.classList.remove('pointer-events-none');
+                    mobileMenu.classList.remove('opacity-0');
+                    document.body.style.overflow = 'hidden'; // Prevent scrolling
+                } else {
+                    // Close Menu
+                    mobileMenu.classList.add('opacity-0');
+                    mobileMenu.classList.add('pointer-events-none');
+                    document.body.style.overflow = 'auto'; // Re-enable scrolling
+                }
+            }
+
+            menuBtn.addEventListener('click', toggleMobileMenu);
+            closeMenuBtn.addEventListener('click', toggleMobileMenu);
+            
+            // Close menu when a link is clicked
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', toggleMobileMenu);
+            });
+        });
+    </script>
+</body>
+</html>
